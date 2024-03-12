@@ -1,29 +1,51 @@
 const form = document.querySelector(".feedback-form");
 
-const localStorageKey = {
-    email: form.elements.email.value,
-    message: form.elements.message.value,
+form.addEventListener("input", handleInputForm);
+
+function handleInputForm(event) {
+  if (event.target.closest('.feedback-form')) {
+    const email = form.email.value.trim(); 
+    const message = form.message.value.trim(); 
+
+    const localStorageKey = {
+      email: email,
+      message: message,
+    };
+    localStorage.setItem('feedback-form-state', JSON.stringify(localStorageKey));
+  }
 }
 
-console.log(localStorageKey);
-form.addEventListener("input", (handleInput) => {
-    localStorage.setItem(localStorageKey, handleInput.target.value)
-});
+function checkLocalStorage() {
+  const savedInfo = localStorage.getItem("feedback-form-state");
+  if (savedInfo) {
+    const formData = JSON.parse(savedInfo)
+    form.email.value = formData.email;
+    form.message.value = formData.message;
+  } else {
+    form.reset();
+  }
+}
 
-// function handleInput() {
-//     const formInfo = localStorage.getItem("feedback-form-state", localStorageKey)
-//     console.log(formInfo);
-// }
+document.addEventListener('DOMContentLoaded', checkLocalStorage);
 
+document.addEventListener("input", handleInputForm);
 
+form.addEventListener("submit", handleSubmit) 
 
-form.addEventListener("submit", (handleSubmit) => {
-  handleSubmit.preventDefault();
-	console.log(handleSubmit.target.elements.message.value);
+function handleSubmit(event) {
+event.preventDefault();
   form.reset();
-});
-console.log(handleInput);
-// function handleSubmit(event) {
-//     event.preventDefault()
-// }
+ const savedState = localStorage.getItem('feedback-form-state');
+  const localStorageInfo = savedState ? JSON.parse(savedState) : {};
 
+if (!localStorageInfo.email || !localStorageInfo.message) {
+    alert('Будь ласка, заповніть обидва поля форми');
+    return;
+  }
+
+  const emailValue = localStorageInfo.email.trim();
+  const messageValue = localStorageInfo.message.trim();
+  
+  console.log("Email:", emailValue);
+  console.log("Message:", messageValue);
+}
