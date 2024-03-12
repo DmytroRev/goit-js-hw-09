@@ -28,24 +28,18 @@ function checkLocalStorage() {
 
 document.addEventListener('DOMContentLoaded', checkLocalStorage);
 
-document.addEventListener("input", handleInputForm);
-
 form.addEventListener("submit", handleSubmit) 
 
 function handleSubmit(event) {
-event.preventDefault();
-  form.reset();
- const savedState = localStorage.getItem('feedback-form-state');
+  event.preventDefault();
+
+  const savedState = localStorage.getItem('feedback-form-state');
   const localStorageInfo = savedState ? JSON.parse(savedState) : {};
 
-if (!localStorageInfo.email || !localStorageInfo.message) {
+  if (!localStorageInfo.email || !localStorageInfo.message) {
     alert('Будь ласка, заповніть обидва поля форми');
     return;
   }
 
-  const emailValue = localStorageInfo.email.trim();
-  const messageValue = localStorageInfo.message.trim();
-  
-  console.log("Email:", emailValue);
-  console.log("Message:", messageValue);
+  console.log(localStorageInfo);
 }
