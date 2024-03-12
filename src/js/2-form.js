@@ -22,7 +22,7 @@ form.addEventListener("submit", (handleSubmit) => {
 	console.log(handleSubmit.target.elements.message.value);
   form.reset();
 });
-
+console.log(handleInput);
 // function handleSubmit(event) {
 //     event.preventDefault()
 // }
