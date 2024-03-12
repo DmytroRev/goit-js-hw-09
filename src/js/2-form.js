@@ -40,6 +40,7 @@ function handleSubmit(event) {
     alert('Будь ласка, заповніть обидва поля форми');
     return;
   }
-
+  localStorage.removeItem('feedback-form-state');
+  form.reset();
   console.log(localStorageInfo);
 }
